@@ -11,12 +11,13 @@
     header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 14px 22px; background: #e1f0fb; border-bottom: 1px solid #c4dce9; }
     h1 { font-size: 1.08rem; margin: 0; font-weight: 650; }
     .sub { color: #647d90; font-size: .84rem; }
+    .brand-area { display: flex; align-items: center; gap: 18px; min-width: 0; }
     .header-info { display: flex; align-items: center; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
     #status { color: #425d70; background: #fff; border: 1px solid #c6dce9; border-radius: 999px; padding: 6px 11px; font-size: .82rem; }
     #credibility { display: flex; align-items: center; gap: 9px; padding: 7px 12px; border: 1px solid #efb989; border-radius: 10px; background: #fff9f3; color: #714523; }
     #credibility strong { color: #c96a2b; font-size: 1.4rem; font-variant-numeric: tabular-nums; }
     #credibility .score-caption { font-size: .92rem; font-weight: 600; white-space: nowrap; }
-    #workspace { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 290px; }
+    #workspace { min-height: 0; display: grid; grid-template-columns: minmax(0, 3fr) minmax(380px, 2fr); }
     #viewport { min-height: 0; position: relative; overflow: hidden; }
     #viewport canvas { display: block; width: 100%; height: 100%; }
     #hint { position: absolute; top: 18px; left: 20px; color: #d9e6ef; font-size: .82rem; pointer-events: none; }
@@ -41,7 +42,9 @@
     .base-control input { width: 82px; padding: 7px; border: 1px solid #b9d3e2; border-radius: 7px; background: #f7fbfe; color: #263746; font: inherit; }
     #telemetry { display: grid; gap: 12px; margin-top: 18px; padding-top: 14px; border-top: 1px solid #d8e6ee; }
     .chart-card { padding: 9px 9px 7px; border: 1px solid #cfe0eb; border-radius: 9px; background: #f9fcfe; }
+    .chart-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
     .chart-card h3 { margin: 0 0 3px; color: #385366; font-size: .8rem; font-weight: 650; }
+    .chart-value { color: #263746; font-size: .76rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
     .chart-card p { margin: 0; color: #7890a1; font-size: .7rem; }
     .chart-card .legend { display: inline-flex; align-items: center; gap: 3px; margin-right: 8px; }
     .chart-card .dot { width: 7px; height: 7px; border-radius: 50%; background: #388ab8; }
@@ -62,12 +65,12 @@
     #toggle.is-playing .icon-pause { display: block; }
     input[type="range"] { width: 100%; accent-color: #ed8b46; }
     #time { font-variant-numeric: tabular-nums; min-width: 120px; text-align: right; }
-    @media (max-width: 700px) { body { height: auto; min-height: 100dvh; grid-template-rows: auto auto auto; } header { align-items: flex-start; flex-direction: column; } .header-info { justify-content: flex-start; } #workspace { grid-template-columns: 1fr; } #viewport { height: 52vh; min-height: 350px; } aside { border-left: 0; border-top: 1px solid #cbdde8; max-height: 240px; } footer { grid-template-columns: 1fr auto; gap: 10px; } .transport button:not(#toggle) { width: 42px; padding: 8px; font-size: 0; } #prevFrame::before { content: '←'; font-size: 18px; } #nextFrame::before { content: '→'; font-size: 18px; } #seek { grid-column: 1 / -1; grid-row: 2; } #time { text-align: left; } }
+    @media (max-width: 700px) { body { height: auto; min-height: 100dvh; grid-template-rows: auto auto auto; } header { align-items: flex-start; flex-direction: column; } .brand-area { align-items: flex-start; flex-direction: column; gap: 10px; } .header-info { justify-content: flex-start; } #workspace { grid-template-columns: 1fr; } #viewport { height: 52vh; min-height: 350px; } aside { border-left: 0; border-top: 1px solid #cbdde8; max-height: 320px; } footer { grid-template-columns: 1fr auto; gap: 10px; } .transport button:not(#toggle) { width: 42px; padding: 8px; font-size: 0; } #prevFrame::before { content: '←'; font-size: 18px; } #nextFrame::before { content: '→'; font-size: 18px; } #seek { grid-column: 1 / -1; grid-row: 2; } #time { text-align: left; } }
   </style>
-  <script type="module" crossorigin src="./assets/index-HzXCYozf.js"></script>
+  <script type="module" crossorigin src="./assets/index-nyMrG2s-.js"></script>
 </head>
 <body>
-  <header><div><h1>S17 · MuJoCo 动作回放</h1><div class="sub">本地 NPZ · 运动学回放</div></div><div class="header-info"><div id="status">正在加载…</div><div id="credibility" title="抽样检查质心受力、脚底摩擦需求、支撑脚滑动和穿地；仅供参考，非严格动力学验证。"><strong id="credibilityScore">—</strong><span class="score-caption">动力学可信度，仅供参考</span></div></div></header>
+  <header><div class="brand-area"><div><h1>S17 · MuJoCo 动作回放</h1><div class="sub">本地 NPZ · 运动学回放</div></div><div id="credibility" title="抽样检查质心受力、脚底摩擦需求、支撑脚滑动和穿地；仅供参考，非严格动力学验证。"><span class="score-caption">本条数据动力学参考可信度</span><strong id="credibilityScore">—</strong></div></div><div class="header-info"><div id="status">正在加载…</div></div></header>
   <div id="workspace">
     <main id="viewport"><div id="hint">拖动旋转 · 滚轮缩放 · 右键平移</div><div id="dropOverlay">松开以加载 NPZ 文件或文件夹</div></main>
     <aside>
@@ -80,8 +83,8 @@
       <div id="libraryStatus">内置示例已就绪</div>
       <ul id="motionList"><li><button data-default class="active">内置示例 · roban_flip.npz</button></li><li><button data-second>内置示例 · 105_50fps.npz</button></li></ul>
       <section id="telemetry" aria-label="动作曲线">
-        <div class="chart-card"><h3>双脚 link_6 · Z 坐标</h3><p><span class="legend"><span class="dot"></span>左脚</span><span class="legend"><span class="dot right"></span>右脚</span>世界坐标 · m</p><canvas id="footHeightChart" aria-label="左右脚 link_6 Z 坐标曲线"></canvas></div>
-        <div class="chart-card"><h3>IMU Roll</h3><p>Base 姿态推算 · °</p><canvas id="imuRollChart" aria-label="IMU Roll 曲线"></canvas></div>
+        <div class="chart-card"><div class="chart-head"><h3>双脚 link_6 · Z 坐标</h3><strong id="footHeightValue" class="chart-value">左 — m · 右 — m</strong></div><p><span class="legend"><span class="dot"></span>左脚</span><span class="legend"><span class="dot right"></span>右脚</span>世界坐标 · m</p><canvas id="footHeightChart" aria-label="左右脚 link_6 Z 坐标曲线"></canvas></div>
+        <div class="chart-card"><div class="chart-head"><h3>IMU Roll</h3><strong id="imuRollValue" class="chart-value">—°</strong></div><p>Base 姿态 · °</p><canvas id="imuRollChart" aria-label="IMU Roll 曲线"></canvas></div>
       </section>
     </aside>
   </div>
