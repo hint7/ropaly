@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>S17 动作回放</title>
+  <style>
+    :root { font-family: Inter, system-ui, sans-serif; color: #e8edf4; background: #10151e; }
+    * { box-sizing: border-box; }
+    body { margin: 0; height: 100dvh; min-height: 500px; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+    header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 14px 22px; border-bottom: 1px solid #28313e; }
+    h1 { font-size: 1.08rem; margin: 0; font-weight: 650; }
+    .sub, #status { color: #91a2b7; font-size: .84rem; }
+    #viewport { min-height: 0; position: relative; overflow: hidden; }
+    #viewport canvas { display: block; width: 100%; height: 100%; }
+    #hint { position: absolute; top: 18px; left: 20px; color: #aebccc; font-size: .82rem; pointer-events: none; }
+    footer { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 16px; padding: 18px 22px; border-top: 1px solid #28313e; }
+    button { border: 1px solid #486782; background: #223c52; color: white; border-radius: 8px; padding: 9px 18px; font: inherit; cursor: pointer; }
+    button:disabled { opacity: .5; cursor: wait; }
+    input[type="range"] { width: 100%; accent-color: #5cd6bd; }
+    #time { font-variant-numeric: tabular-nums; min-width: 120px; text-align: right; }
+    @media (max-width: 600px) { header { align-items: flex-start; flex-direction: column; } footer { grid-template-columns: auto 1fr; } #time { text-align: left; } }
+  </style>
+  <script type="module" crossorigin src="./assets/index-DJx0NvRM.js"></script>
+</head>
+<body>
+  <header><div><h1>S17 · MuJoCo 动作回放</h1><div class="sub">本地 NPZ · 运动学回放</div></div><div id="status">正在加载…</div></header>
+  <main id="viewport"><div id="hint">拖动旋转 · 滚轮缩放 · 右键平移</div></main>
+  <footer>
+    <button id="toggle" disabled>播放</button>
+    <input id="seek" type="range" min="0" max="0" value="0" aria-label="播放进度" disabled />
+    <span id="time">0.00 / 0.00 s</span>
+    <span class="sub" id="frame">0 / 0</span>
+  </footer>
+</body>
+</html>
