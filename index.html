@@ -11,23 +11,48 @@
     header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 14px 22px; border-bottom: 1px solid #28313e; }
     h1 { font-size: 1.08rem; margin: 0; font-weight: 650; }
     .sub, #status { color: #91a2b7; font-size: .84rem; }
+    #workspace { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 290px; }
     #viewport { min-height: 0; position: relative; overflow: hidden; }
     #viewport canvas { display: block; width: 100%; height: 100%; }
     #hint { position: absolute; top: 18px; left: 20px; color: #aebccc; font-size: .82rem; pointer-events: none; }
-    footer { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 16px; padding: 18px 22px; border-top: 1px solid #28313e; }
+    #dropOverlay { display: none; position: absolute; inset: 12px; border: 2px dashed #5cd6bd; border-radius: 16px; background: #102c35d9; place-items: center; font-size: 1.2rem; pointer-events: none; z-index: 2; }
+    body.dragging #dropOverlay { display: grid; }
+    aside { border-left: 1px solid #28313e; padding: 20px 16px; overflow-y: auto; background: #131b27; }
+    aside h2 { margin: 0 0 8px; font-size: 1rem; }
+    aside p { margin: 0 0 16px; line-height: 1.5; }
+    .library-actions { display: flex; gap: 8px; margin-bottom: 12px; }
+    .library-actions button { flex: 1; padding: 8px 7px; font-size: .8rem; }
+    #libraryStatus { min-height: 1.5em; font-size: .8rem; color: #91a2b7; }
+    #motionList { list-style: none; padding: 0; margin: 10px 0; }
+    #motionList li { margin-bottom: 5px; }
+    #motionList button { width: 100%; text-align: left; overflow-wrap: anywhere; background: transparent; border-color: transparent; color: #c6d4e3; }
+    #motionList button:hover, #motionList button.active { background: #243d4b; border-color: #416b70; color: white; }
+    footer { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto auto; align-items: center; gap: 16px; padding: 18px 22px; border-top: 1px solid #28313e; }
     button { border: 1px solid #486782; background: #223c52; color: white; border-radius: 8px; padding: 9px 18px; font: inherit; cursor: pointer; }
     button:disabled { opacity: .5; cursor: wait; }
     input[type="range"] { width: 100%; accent-color: #5cd6bd; }
     #time { font-variant-numeric: tabular-nums; min-width: 120px; text-align: right; }
-    @media (max-width: 600px) { header { align-items: flex-start; flex-direction: column; } footer { grid-template-columns: auto 1fr; } #time { text-align: left; } }
+    @media (max-width: 700px) { body { height: auto; min-height: 100dvh; grid-template-rows: auto auto auto; } header { align-items: flex-start; flex-direction: column; } #workspace { grid-template-columns: 1fr; } #viewport { height: 52vh; min-height: 350px; } aside { border-left: 0; border-top: 1px solid #28313e; max-height: 240px; } footer { grid-template-columns: auto auto 1fr; } #time { text-align: left; } }
   </style>
-  <script type="module" crossorigin src="./assets/index-DJx0NvRM.js"></script>
+  <script type="module" crossorigin src="./assets/index-Cjn98fNq.js"></script>
 </head>
 <body>
   <header><div><h1>S17 · MuJoCo 动作回放</h1><div class="sub">本地 NPZ · 运动学回放</div></div><div id="status">正在加载…</div></header>
-  <main id="viewport"><div id="hint">拖动旋转 · 滚轮缩放 · 右键平移</div></main>
+  <div id="workspace">
+    <main id="viewport"><div id="hint">拖动旋转 · 滚轮缩放 · 右键平移</div><div id="dropOverlay">松开以加载 NPZ 文件或文件夹</div></main>
+    <aside>
+      <h2>动作列表</h2>
+      <p class="sub">拖入 NPZ 或整个文件夹，再点击文件名播放。文件只在当前浏览器中读取。</p>
+      <div class="library-actions"><button id="chooseFiles">选择 NPZ</button><button id="chooseFolder">选择文件夹</button></div>
+      <input id="fileInput" type="file" accept=".npz" multiple hidden />
+      <input id="folderInput" type="file" webkitdirectory multiple hidden />
+      <div id="libraryStatus">内置示例已就绪</div>
+      <ul id="motionList"><li><button data-default class="active">内置示例 · 035_50fps.npz</button></li></ul>
+    </aside>
+  </div>
   <footer>
     <button id="toggle" disabled>播放</button>
+    <button id="contactToggle" disabled aria-pressed="false">接触点：关 (C)</button>
     <input id="seek" type="range" min="0" max="0" value="0" aria-label="播放进度" disabled />
     <span id="time">0.00 / 0.00 s</span>
     <span class="sub" id="frame">0 / 0</span>
