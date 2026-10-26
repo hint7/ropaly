@@ -11,7 +11,12 @@
     header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 14px 22px; background: #e1f0fb; border-bottom: 1px solid #c4dce9; }
     h1 { font-size: 1.08rem; margin: 0; font-weight: 650; }
     .sub { color: #647d90; font-size: .84rem; }
+    .header-info { display: flex; align-items: center; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
     #status { color: #425d70; background: #fff; border: 1px solid #c6dce9; border-radius: 999px; padding: 6px 11px; font-size: .82rem; }
+    #credibility { display: flex; align-items: center; gap: 9px; min-width: 172px; padding: 6px 10px; border: 1px solid #efb989; border-radius: 10px; background: #fff9f3; color: #714523; }
+    #credibility strong { color: #c96a2b; font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+    #credibility .score-caption { display: flex; flex-direction: column; gap: 1px; font-size: .77rem; line-height: 1.2; }
+    #credibility small { color: #896b55; font-size: .68rem; }
     #workspace { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 290px; }
     #viewport { min-height: 0; position: relative; overflow: hidden; }
     #viewport canvas { display: block; width: 100%; height: 100%; }
@@ -50,12 +55,12 @@
     #toggle.is-playing .icon-pause { display: block; }
     input[type="range"] { width: 100%; accent-color: #ed8b46; }
     #time { font-variant-numeric: tabular-nums; min-width: 120px; text-align: right; }
-    @media (max-width: 700px) { body { height: auto; min-height: 100dvh; grid-template-rows: auto auto auto; } header { align-items: flex-start; flex-direction: column; } #workspace { grid-template-columns: 1fr; } #viewport { height: 52vh; min-height: 350px; } aside { border-left: 0; border-top: 1px solid #cbdde8; max-height: 240px; } footer { grid-template-columns: 1fr auto; gap: 10px; } .transport button:not(#toggle) { width: 42px; padding: 8px; font-size: 0; } #prevFrame::before { content: '←'; font-size: 18px; } #nextFrame::before { content: '→'; font-size: 18px; } #seek { grid-column: 1 / -1; grid-row: 2; } #time { text-align: left; } }
+    @media (max-width: 700px) { body { height: auto; min-height: 100dvh; grid-template-rows: auto auto auto; } header { align-items: flex-start; flex-direction: column; } .header-info { justify-content: flex-start; } #workspace { grid-template-columns: 1fr; } #viewport { height: 52vh; min-height: 350px; } aside { border-left: 0; border-top: 1px solid #cbdde8; max-height: 240px; } footer { grid-template-columns: 1fr auto; gap: 10px; } .transport button:not(#toggle) { width: 42px; padding: 8px; font-size: 0; } #prevFrame::before { content: '←'; font-size: 18px; } #nextFrame::before { content: '→'; font-size: 18px; } #seek { grid-column: 1 / -1; grid-row: 2; } #time { text-align: left; } }
   </style>
-  <script type="module" crossorigin src="./assets/index-DRwNTYhe.js"></script>
+  <script type="module" crossorigin src="./assets/index-D1flOi6g.js"></script>
 </head>
 <body>
-  <header><div><h1>S17 · MuJoCo 动作回放</h1><div class="sub">本地 NPZ · 运动学回放</div></div><div id="status">正在加载…</div></header>
+  <header><div><h1>S17 · MuJoCo 动作回放</h1><div class="sub">本地 NPZ · 运动学回放</div></div><div class="header-info"><div id="status">正在加载…</div><div id="credibility" title="抽样检查质心受力、脚底摩擦需求、支撑脚滑动和穿地；仅供娱乐，非严格动力学验证。"><strong id="credibilityScore">—</strong><span class="score-caption">动力学可信度<small>娱乐指标 · 仅供参考</small></span></div></div></header>
   <div id="workspace">
     <main id="viewport"><div id="hint">拖动旋转 · 滚轮缩放 · 右键平移</div><div id="dropOverlay">松开以加载 NPZ 文件或文件夹</div></main>
     <aside>
