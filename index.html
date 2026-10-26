@@ -5,48 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>S17 动作回放</title>
   <style>
-    :root { font-family: Inter, system-ui, sans-serif; color: #e8edf4; background: #10151e; }
+    :root { font-family: Inter, system-ui, sans-serif; color: #263746; background: #e8f3fb; }
     * { box-sizing: border-box; }
     body { margin: 0; height: 100dvh; min-height: 500px; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
-    header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 14px 22px; border-bottom: 1px solid #28313e; }
+    header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 14px 22px; background: #e1f0fb; border-bottom: 1px solid #c4dce9; }
     h1 { font-size: 1.08rem; margin: 0; font-weight: 650; }
-    .sub, #status { color: #91a2b7; font-size: .84rem; }
+    .sub { color: #647d90; font-size: .84rem; }
+    #status { color: #425d70; background: #fff; border: 1px solid #c6dce9; border-radius: 999px; padding: 6px 11px; font-size: .82rem; }
     #workspace { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 290px; }
     #viewport { min-height: 0; position: relative; overflow: hidden; }
     #viewport canvas { display: block; width: 100%; height: 100%; }
-    #hint { position: absolute; top: 18px; left: 20px; color: #aebccc; font-size: .82rem; pointer-events: none; }
-    #dropOverlay { display: none; position: absolute; inset: 12px; border: 2px dashed #5cd6bd; border-radius: 16px; background: #102c35d9; place-items: center; font-size: 1.2rem; pointer-events: none; z-index: 2; }
+    #hint { position: absolute; top: 18px; left: 20px; color: #d9e6ef; font-size: .82rem; pointer-events: none; }
+    #dropOverlay { display: none; position: absolute; inset: 12px; border: 2px dashed #ee924f; border-radius: 16px; background: #e2f1f6ed; color: #263746; place-items: center; font-size: 1.2rem; pointer-events: none; z-index: 2; }
     body.dragging #dropOverlay { display: grid; }
-    aside { border-left: 1px solid #28313e; padding: 20px 16px; overflow-y: auto; background: #131b27; }
+    aside { border-left: 1px solid #cbdde8; padding: 20px 16px; overflow-y: auto; background: #fff; }
     aside h2 { margin: 0 0 8px; font-size: 1rem; }
     aside p { margin: 0 0 16px; line-height: 1.5; }
     .library-actions { display: flex; gap: 8px; margin-bottom: 12px; }
     .library-actions button { flex: 1; padding: 8px 7px; font-size: .8rem; }
-    #libraryStatus { min-height: 1.5em; font-size: .8rem; color: #91a2b7; }
+    #libraryStatus { min-height: 1.5em; font-size: .8rem; color: #647d90; }
     #motionList { list-style: none; padding: 0; margin: 10px 0; }
     #motionList li { margin-bottom: 2px; }
-    #motionList ul { list-style: none; margin: 4px 0 8px 9px; padding-left: 11px; border-left: 1px solid #354657; }
-    #motionList summary { cursor: pointer; padding: 6px 7px; border-radius: 7px; color: #d2dfeb; font-size: .87rem; }
-    #motionList summary:hover { background: #223644; }
-    #motionList summary .count { float: right; color: #829bad; font-size: .76rem; }
-    #motionList button { width: 100%; text-align: left; overflow-wrap: anywhere; background: transparent; border-color: transparent; color: #c6d4e3; }
-    #motionList button:hover, #motionList button.active { background: #243d4b; border-color: #416b70; color: white; }
+    #motionList ul { list-style: none; margin: 4px 0 8px 9px; padding-left: 11px; border-left: 1px solid #d0e2ec; }
+    #motionList summary { cursor: pointer; padding: 6px 7px; border-radius: 7px; color: #314758; font-size: .87rem; }
+    #motionList summary:hover { background: #e8f4fb; }
+    #motionList summary .count { float: right; color: #7890a1; font-size: .76rem; }
+    #motionList button { width: 100%; text-align: left; overflow-wrap: anywhere; background: transparent; border-color: transparent; color: #364c5d; }
+    #motionList button:hover { background: #e6f3fb; border-color: #bed8e8; }
+    #motionList button.active { background: #fff3e9; border-color: #efb989; color: #543c2a; box-shadow: inset 3px 0 #ed8b46; }
     .base-control { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 0 0 15px; font-size: .85rem; }
-    .base-control input { width: 82px; padding: 7px; border: 1px solid #486782; border-radius: 7px; background: #1c2b3a; color: white; font: inherit; }
-    footer { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto auto; align-items: center; gap: 16px; padding: 18px 22px; border-top: 1px solid #28313e; }
-    button { border: 1px solid #486782; background: #223c52; color: white; border-radius: 8px; padding: 9px 18px; font: inherit; cursor: pointer; }
+    .base-control input { width: 82px; padding: 7px; border: 1px solid #b9d3e2; border-radius: 7px; background: #f7fbfe; color: #263746; font: inherit; }
+    footer { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto auto; align-items: center; gap: 16px; padding: 18px 22px; background: #fff; border-top: 1px solid #cbdde8; }
+    button { border: 1px solid #b9d2e2; background: #edf7fd; color: #263746; border-radius: 8px; padding: 9px 18px; font: inherit; cursor: pointer; transition: background .15s ease, border-color .15s ease; }
+    button:hover:not(:disabled) { background: #dceef9; border-color: #8fb8d2; }
+    button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px solid #eb8d4b; outline-offset: 2px; }
     button:disabled { opacity: .5; cursor: wait; }
     .transport { display: flex; align-items: center; gap: 6px; }
     .transport button { height: 40px; padding: 8px 11px; white-space: nowrap; }
-    #toggle { display: grid; place-items: center; width: 42px; padding: 8px; background: #276c72; border-color: #55b8a8; }
+    #toggle { display: grid; place-items: center; width: 42px; padding: 8px; color: #fff; background: #ed8b46; border-color: #d97836; }
+    #toggle:hover:not(:disabled) { background: #d97836; border-color: #c96a2b; }
+    #contactToggle[aria-pressed="true"] { background: #e1f1fb; border-color: #9ec6df; }
     #toggle svg { width: 18px; height: 18px; fill: currentColor; }
     #toggle .icon-pause, #toggle.is-playing .icon-play { display: none; }
     #toggle.is-playing .icon-pause { display: block; }
-    input[type="range"] { width: 100%; accent-color: #5cd6bd; }
+    input[type="range"] { width: 100%; accent-color: #ed8b46; }
     #time { font-variant-numeric: tabular-nums; min-width: 120px; text-align: right; }
-    @media (max-width: 700px) { body { height: auto; min-height: 100dvh; grid-template-rows: auto auto auto; } header { align-items: flex-start; flex-direction: column; } #workspace { grid-template-columns: 1fr; } #viewport { height: 52vh; min-height: 350px; } aside { border-left: 0; border-top: 1px solid #28313e; max-height: 240px; } footer { grid-template-columns: 1fr auto; gap: 10px; } .transport button:not(#toggle) { width: 42px; padding: 8px; font-size: 0; } #prevFrame::before { content: '←'; font-size: 18px; } #nextFrame::before { content: '→'; font-size: 18px; } #seek { grid-column: 1 / -1; grid-row: 2; } #time { text-align: left; } }
+    @media (max-width: 700px) { body { height: auto; min-height: 100dvh; grid-template-rows: auto auto auto; } header { align-items: flex-start; flex-direction: column; } #workspace { grid-template-columns: 1fr; } #viewport { height: 52vh; min-height: 350px; } aside { border-left: 0; border-top: 1px solid #cbdde8; max-height: 240px; } footer { grid-template-columns: 1fr auto; gap: 10px; } .transport button:not(#toggle) { width: 42px; padding: 8px; font-size: 0; } #prevFrame::before { content: '←'; font-size: 18px; } #nextFrame::before { content: '→'; font-size: 18px; } #seek { grid-column: 1 / -1; grid-row: 2; } #time { text-align: left; } }
   </style>
-  <script type="module" crossorigin src="./assets/index-DAxZ7LWW.js"></script>
+  <script type="module" crossorigin src="./assets/index-DRwNTYhe.js"></script>
 </head>
 <body>
   <header><div><h1>S17 · MuJoCo 动作回放</h1><div class="sub">本地 NPZ · 运动学回放</div></div><div id="status">正在加载…</div></header>
