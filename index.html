@@ -36,11 +36,17 @@
     footer { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto auto; align-items: center; gap: 16px; padding: 18px 22px; border-top: 1px solid #28313e; }
     button { border: 1px solid #486782; background: #223c52; color: white; border-radius: 8px; padding: 9px 18px; font: inherit; cursor: pointer; }
     button:disabled { opacity: .5; cursor: wait; }
+    .transport { display: flex; align-items: center; gap: 6px; }
+    .transport button { height: 40px; padding: 8px 11px; white-space: nowrap; }
+    #toggle { display: grid; place-items: center; width: 42px; padding: 8px; background: #276c72; border-color: #55b8a8; }
+    #toggle svg { width: 18px; height: 18px; fill: currentColor; }
+    #toggle .icon-pause, #toggle.is-playing .icon-play { display: none; }
+    #toggle.is-playing .icon-pause { display: block; }
     input[type="range"] { width: 100%; accent-color: #5cd6bd; }
     #time { font-variant-numeric: tabular-nums; min-width: 120px; text-align: right; }
-    @media (max-width: 700px) { body { height: auto; min-height: 100dvh; grid-template-rows: auto auto auto; } header { align-items: flex-start; flex-direction: column; } #workspace { grid-template-columns: 1fr; } #viewport { height: 52vh; min-height: 350px; } aside { border-left: 0; border-top: 1px solid #28313e; max-height: 240px; } footer { grid-template-columns: auto auto 1fr; } #time { text-align: left; } }
+    @media (max-width: 700px) { body { height: auto; min-height: 100dvh; grid-template-rows: auto auto auto; } header { align-items: flex-start; flex-direction: column; } #workspace { grid-template-columns: 1fr; } #viewport { height: 52vh; min-height: 350px; } aside { border-left: 0; border-top: 1px solid #28313e; max-height: 240px; } footer { grid-template-columns: 1fr auto; gap: 10px; } .transport button:not(#toggle) { width: 42px; padding: 8px; font-size: 0; } #prevFrame::before { content: '←'; font-size: 18px; } #nextFrame::before { content: '→'; font-size: 18px; } #seek { grid-column: 1 / -1; grid-row: 2; } #time { text-align: left; } }
   </style>
-  <script type="module" crossorigin src="./assets/index-DAYLCasY.js"></script>
+  <script type="module" crossorigin src="./assets/index-DAxZ7LWW.js"></script>
 </head>
 <body>
   <header><div><h1>S17 · MuJoCo 动作回放</h1><div class="sub">本地 NPZ · 运动学回放</div></div><div id="status">正在加载…</div></header>
@@ -49,7 +55,7 @@
     <aside>
       <h2>动作列表</h2>
       <p class="sub">拖入 NPZ 或整个文件夹，再点击文件名播放。文件只在当前浏览器中读取。</p>
-      <div class="library-actions"><button id="chooseFiles">选择 NPZ</button><button id="chooseFolder">选择文件夹</button></div>
+      <div class="library-actions"><button id="chooseFiles">选择本地NPZ</button><button id="chooseFolder">选择本地文件夹</button></div>
       <label class="base-control" for="baseHeight">Base 起始高度 (m)<input id="baseHeight" type="number" value="0.77" min="0" max="3" step="0.01" /></label>
       <input id="fileInput" type="file" accept=".npz" multiple hidden />
       <input id="folderInput" type="file" webkitdirectory multiple hidden />
@@ -58,7 +64,14 @@
     </aside>
   </div>
   <footer>
-    <button id="toggle" disabled>播放</button>
+    <div class="transport" role="group" aria-label="逐帧与播放控制">
+      <button id="prevFrame" disabled title="退帧（左方向键）" aria-label="退帧（左方向键）">← 退帧</button>
+      <button id="toggle" disabled title="播放（空格）" aria-label="播放（空格）" aria-pressed="false">
+        <svg viewBox="0 0 20 20" class="icon-play" aria-hidden="true"><path d="M5 2.5v15l12-7.5z"/></svg>
+        <svg viewBox="0 0 20 20" class="icon-pause" aria-hidden="true"><rect x="3" y="2.5" width="5" height="15" rx="1"/><rect x="12" y="2.5" width="5" height="15" rx="1"/></svg>
+      </button>
+      <button id="nextFrame" disabled title="进帧（右方向键）" aria-label="进帧（右方向键）">进帧 →</button>
+    </div>
     <button id="contactToggle" disabled aria-pressed="true">接触点：开 (C)</button>
     <input id="seek" type="range" min="0" max="0" value="0" aria-label="播放进度" disabled />
     <span id="time">0.00 / 0.00 s</span>
