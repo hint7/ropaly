@@ -39,6 +39,11 @@
     #motionList button.active { background: #fff3e9; border-color: #efb989; color: #543c2a; box-shadow: inset 3px 0 #ed8b46; }
     .base-control { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 0 0 15px; font-size: .85rem; }
     .base-control input { width: 82px; padding: 7px; border: 1px solid #b9d3e2; border-radius: 7px; background: #f7fbfe; color: #263746; font: inherit; }
+    #telemetry { display: grid; gap: 12px; margin-top: 18px; padding-top: 14px; border-top: 1px solid #d8e6ee; }
+    .chart-card { padding: 9px 9px 7px; border: 1px solid #cfe0eb; border-radius: 9px; background: #f9fcfe; }
+    .chart-card h3 { margin: 0 0 3px; color: #385366; font-size: .8rem; font-weight: 650; }
+    .chart-card p { margin: 0; color: #7890a1; font-size: .7rem; }
+    .chart-card canvas { display: block; width: 100%; height: 105px; margin-top: 4px; }
     footer { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto auto; align-items: center; gap: 16px; padding: 18px 22px; background: #fff; border-top: 1px solid #cbdde8; }
     button { border: 1px solid #b9d2e2; background: #edf7fd; color: #263746; border-radius: 8px; padding: 9px 18px; font: inherit; cursor: pointer; transition: background .15s ease, border-color .15s ease; }
     button:hover:not(:disabled) { background: #dceef9; border-color: #8fb8d2; }
@@ -56,7 +61,7 @@
     #time { font-variant-numeric: tabular-nums; min-width: 120px; text-align: right; }
     @media (max-width: 700px) { body { height: auto; min-height: 100dvh; grid-template-rows: auto auto auto; } header { align-items: flex-start; flex-direction: column; } .header-info { justify-content: flex-start; } #workspace { grid-template-columns: 1fr; } #viewport { height: 52vh; min-height: 350px; } aside { border-left: 0; border-top: 1px solid #cbdde8; max-height: 240px; } footer { grid-template-columns: 1fr auto; gap: 10px; } .transport button:not(#toggle) { width: 42px; padding: 8px; font-size: 0; } #prevFrame::before { content: '←'; font-size: 18px; } #nextFrame::before { content: '→'; font-size: 18px; } #seek { grid-column: 1 / -1; grid-row: 2; } #time { text-align: left; } }
   </style>
-  <script type="module" crossorigin src="./assets/index-c-r-Dhef.js"></script>
+  <script type="module" crossorigin src="./assets/index-CeIdX-gW.js"></script>
 </head>
 <body>
   <header><div><h1>S17 · MuJoCo 动作回放</h1><div class="sub">本地 NPZ · 运动学回放</div></div><div class="header-info"><div id="status">正在加载…</div><div id="credibility" title="抽样检查质心受力、脚底摩擦需求、支撑脚滑动和穿地；仅供参考，非严格动力学验证。"><strong id="credibilityScore">—</strong><span class="score-caption">动力学可信度，仅供参考</span></div></div></header>
@@ -71,6 +76,10 @@
       <input id="folderInput" type="file" webkitdirectory multiple hidden />
       <div id="libraryStatus">内置示例已就绪</div>
       <ul id="motionList"><li><button data-default class="active">内置示例 · roban_flip.npz</button></li><li><button data-second>内置示例 · 105_50fps.npz</button></li></ul>
+      <section id="telemetry" aria-label="动作曲线">
+        <div class="chart-card"><h3>右脚 link_6 · Z 坐标</h3><p>世界坐标 · m</p><canvas id="rightFootChart" aria-label="右脚 link_6 Z 坐标曲线"></canvas></div>
+        <div class="chart-card"><h3>IMU Roll</h3><p>Base 姿态推算 · °</p><canvas id="imuRollChart" aria-label="IMU Roll 曲线"></canvas></div>
+      </section>
     </aside>
   </div>
   <footer>
